@@ -1,59 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Яндекс Карты - Интеграция отзывов
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Веб-приложение для отображения отзывов с Яндекс Карт на вашем сайте.
 
-## About Laravel
+## Что делает приложение?
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 📊 Показывает рейтинг организации
+- 💬 Отображает последние 5 отзывов
+- 🔄 Автоматически обновляет данные
+- 💾 Кэширует результаты в базе данных
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Быстрый старт
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Запуск через Docker
 
-## Learning Laravel
+```bash
+# Скопировать конфигурацию
+copy .env.example .env
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# Запустить контейнеры
+docker-compose up -d
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Установить зависимости
+docker-compose exec app composer install
+docker-compose exec app npm install
 
-## Laravel Sponsors
+# Создать базу данных и пользователя
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Собрать фронтенд
+docker-compose exec app npm run build
+```
 
-### Premium Partners
+### 2. Вход в систему
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Откройте браузер: **http://localhost**
 
-## Contributing
+**Данные для входа:**
+- Email: `admin@example.com`
+- Пароль: `password`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Настройка
 
-## Code of Conduct
+1. Перейдите в раздел **"Настройка"**
+2. Вставьте ссылку на организацию с Яндекс Карт
+   - Пример: `https://yandex.ru/maps/org/usadba_izmaylovo/226327670406/`
+3. Нажмите **"Сохранить"**
+4. Перейдите в раздел **"Отзывы"** для просмотра
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Структура проекта
 
-## Security Vulnerabilities
+```
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── AuthController.php          # Авторизация
+│   │   └── IntegrationController.php   # Работа с Яндекс
+│   └── Services/
+│       └── YandexService.php           # Парсинг отзывов
+├── resources/
+│   └── js/
+│       ├── views/
+│       │   ├── Login.vue               # Страница входа
+│       │   ├── Settings.vue            # Настройки
+│       │   └── Reviews.vue             # Отзывы
+│       └── components/
+│           └── ReviewCard.vue          # Карточка отзыва
+└── docker-compose.yml                  # Docker конфигурация
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Как это работает?
 
-## License
+1. Вы вводите URL организации на Яндекс Картах
+2. Система извлекает ID организации
+3. Загружает официальный виджет отзывов Яндекса
+4. Парсит HTML и сохраняет данные в БД
+5. Отображает отзывы в красивом интерфейсе
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Разработка
+
+```bash
+# Режим разработки (hot reload)
+docker-compose exec app npm run dev
+
+# Просмотр логов
+docker-compose logs -f app
+
+# Остановка
+docker-compose down
+```
+
+## Технологии
+
+- **Backend**: Laravel 12, PHP 8.3
+- **Frontend**: Vue 3, Vue Router
+- **Database**: MySQL 8.0
+- **Парсинг**: Symfony DomCrawler
+- **Контейнеризация**: Docker

@@ -1,0 +1,167 @@
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+.sidebar {
+    width: 240px;
+    background: white;
+    border-right: 1px solid #e5e5e5;
+    padding: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 32px;
+}
+
+.logo-img {
+    width: 32px;
+    height: auto;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.logout-button {
+    margin-top: 20px;
+    padding: 8px 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.logout-button:hover {
+    background: #dc2626;
+}
+
+.account-name {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #666;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background: #f5f5f5;
+    color: #1a1a1a;
+}
+
+.menu-item.active {
+    background: #3B82F6;
+    color: white;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.content-wrapper {
+    max-width: 800px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 32px;
+}
+
+.settings-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.input-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.example-link {
+    display: block;
+    color: #3B82F6;
+    margin-top: 4px;
+    font-size: 13px;
+}
+
+.url-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+}
+
+.url-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+}
+
+.save-button {
+    background: #3B82F6;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.save-button:hover:not(:disabled) {
+    background: #2563EB;
+}
+
+.save-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.message.success {
+    background: #DEF7EC;
+    color: #03543F;
+}
+
+.message.error {
+    background: #FDE8E8;
+    color: #9B1C1C;
+}
